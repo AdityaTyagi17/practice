@@ -1,0 +1,101 @@
+class Node:
+    def __init__(self,data=None,next=None,prev=None):
+        self.data=data
+        self.next=next
+        self.prev=prev
+
+
+class DoublyLinkedList:
+    def __init__(self):
+        self.head=None
+    
+    def insert_at_begning(self,data):
+        if self.head == None:
+            node = Node(data, self.head, None)
+            self.head = node
+        else:
+            node = Node(data, self.head, None)
+            self.head.prev = node
+            self.head = node
+
+        
+    def insert_at_end(self,data):
+        if(self.head is None):
+            self.head=Node(data,None,None)
+            return
+        
+        itr=self.head
+        while itr.next:
+            itr=itr.next
+            
+        itr.next=Node(data,None,itr)
+        
+    
+    def insert_values(self,dataList):
+        for data in dataList:
+            self.insert_at_end(data)
+            
+    def insert_at(self,index,data):  #(2,44)
+        count=index-1 #1
+        c=0
+        itr=self.head
+        while c!=count:
+            itr=itr.next
+            c+=1
+        
+        node=Node(data,itr.next,itr)
+        itr.next=node
+        itr=itr.next
+        itr.next.prev=itr
+        
+    
+    def remove_at(self,index):  #(4)
+        count=index-1
+        itr=self.head
+        while count:
+            itr=itr.next
+            count-=1
+        itr.next=itr.next.next
+        itr=itr.next
+        itr.next.prev=itr.prev
+        
+        
+    def printListBackward(self):
+        print("Backward")
+        if(self.head is None):
+            print("List is empty")
+        itr=self.head
+        string=""
+        while itr.next:
+            itr=itr.next
+        while itr:
+            string+=str(itr.data)+"<---"   
+            itr=itr.prev
+        print(string)
+        
+    def printListForward(self):
+        print("Forward")
+        if(self.head is None):
+            print("List is empty")
+        itr=self.head
+        string=""
+        while itr:
+            string+=str(itr.data)+"--->"
+            itr=itr.next
+        print(string)
+
+if __name__=='__main__':
+    dll=DoublyLinkedList()
+    #dll.insert_at_begning(3)
+    #dll.insert_at_end(28)
+    #dll.insert_at_end(18)
+    #dll.insert_at_end(8)
+    #dll.insert_at_end(38)
+    dll.insert_values([33,44,55,77,99,11])
+    #dll.insert_at_begning(43)
+    dll.insert_at(4,'aditya')
+    dll.printListForward()
+    dll.remove_at(4)
+    dll.printListForward()
+    #dll.printListBackward()
+    
